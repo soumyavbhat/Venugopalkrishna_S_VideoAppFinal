@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{{ title }}</title>
+	<!-- <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+<!-- <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet"> -->
+
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.15/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+	
+  <title>{{title}}</title>
+</head>
+<body>
+
+
+	<main>
+		<div class="container">
+			{{{ body }}}
+
+		</div>
+	</main>
+
+
+
+  <script>
+    var appData = {
+      movies : {{{ data }}} // grab the unfiltered result set
+    }
+  </script>
+  {{#if mainpage}}
+  <script src="/js/main.js"></script>
+	{{/if}}
+
+	{{#if videopage}}
+	<script src="/js/videopage.js">
+
+	</script>
+	{{/if}}
+	<script type="text/javascript" src="/javascripts/video.js"></script>
+	<script type="text/javascript" src="/javascripts/menu.js"></script>
+
+</body>
+</html>

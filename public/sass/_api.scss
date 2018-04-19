@@ -1,0 +1,27 @@
+.fa-chevron-circle-left
+{
+  color: $white;
+  font-size: 2vw;
+  padding: 2%;
+}
+
+.fa-chevron-circle-left:hover{
+  box-shadow: 0 0 0 black;
+  filter: brightness(150%);
+  transition: .3s;
+}
+
+.vid{
+  margin: 0 auto;
+  video{
+
+    width: 500px;
+    margin-left: 15%;
+    padding-bottom: 5%;
+  }
+  h3{
+    color: $white;
+    padding: 2%;
+    margin-bottom: 2%;
+  }
+}

@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="../css/style.css">
+
+{{> header}}
+{{#if index}}
+ <a href="../"><i class="fas fa-chevron-circle-left"></a></i>
+ {{/if}}
+
+ {{#if adults}}
+ <a href="../adults"><i class="fas fa-chevron-circle-left"></a></i>
+
+ {{/if}}
+
+ {{#if kids}}
+ <a href="../kids"><i class="fas fa-chevron-circle-left"></a></i>
+
+ {{/if}}
+
+ 
+  <!-- <i class="fas fa-user"><h3>Back</h3></i></a> -->
+
+  <div class="vid">
+
+  {{#each video}}
+  <video src="/{{video_path}}" controls poster="/{{video_path}}"></video>
+  <h3>{{img_desc}}</h3>
+  {{/each}}
+
+</div>
+
+{{> footer}}
+<!-- <script type="text/javascript" src="../javascripts/video.js"></script> -->

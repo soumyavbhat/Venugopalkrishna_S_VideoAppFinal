@@ -1,0 +1,23 @@
+<div class="poster">
+
+<div class="posterpart">
+  <section class="postersec" v-for="genre in genres">
+
+          <div v-for="movie in genre.movies">
+            <a :href="'/movies/' + movie.img_id + '/' + movie.video_path">
+              <img class ="movie-thumb" :src="'/images/' + movie.img_path" >
+            </a>
+          </div>
+    </section>
+
+  <!-- {{#each kids}}
+<a href="/kid/{{img_id}}">
+  <img src="{{img_path}}"></img>
+</a>
+  {{/each}} -->
+
+</div>
+
+
+</div>
+<script type="text/javascript" src="javascripts/video.js"></script>

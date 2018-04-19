@@ -1,0 +1,20 @@
+@import "reset";
+@import "colours";
+@import "index";
+@import "header";
+@import "footer";
+@import "welcomeK";
+@import "userK";
+@import "posters";
+
+body{
+  width: 100%;
+  overflow-x: hidden;
+  font-family: 'Lato', sans-serif;
+  background-color: $purple;
+}
+
+.container{
+  max-width: 750px;
+  margin: 0 auto;
+}
