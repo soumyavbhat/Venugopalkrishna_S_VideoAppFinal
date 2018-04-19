@@ -9,7 +9,7 @@ exports.get_all_movies = (req, res)=> {
     {
       return console.log(err.message);
     }
-let query = "SELECT * FROM tbl_indeximg m, tbl_genre g WHERE g.genre_id = 1";
+let query = "SELECT * FROM movies m, tbl_genre g WHERE g.genre_id = 1 AND img_user = 'I' ";
 
 connect.query(query, (err, rows)=>{
   connection.release();
@@ -38,7 +38,7 @@ exports.get_all_moviesA = (req, res)=> {
     {
       return console.log(err.message);
     }
-let query = "SELECT * FROM tbl_adultimg m, tbl_genre g WHERE g.genre_id = 1";
+let query = "SELECT * FROM movies m, tbl_genre g WHERE g.genre_id = 1 AND img_user = 'A'";
 
 connect.query(query, (err, rows)=>{
   connection.release();
@@ -67,7 +67,7 @@ exports.get_all_moviesK = (req, res)=> {
     {
       return console.log(err.message);
     }
-let query = "SELECT * FROM tbl_kidimg m, tbl_genre g WHERE g.genre_id = 1";
+let query = "SELECT * FROM movies m, tbl_genre g WHERE g.genre_id = 1 AND img_user = 'K'";
 
 connect.query(query, (err, rows)=>{
   connection.release();
