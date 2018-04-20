@@ -141,6 +141,7 @@ exports.get_one_movie = (req, res) =>{
       res.render('movie', {
              movie : req.params.id,
              trailer : req.params.vidsrc,
+             url: http:/!/!localhost:3000/movies/req.params.id/req.params.vidsrc,
              data : JSON.stringify(rows),
              mainpage : false,
              videopage : true

@@ -12,7 +12,7 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.15/dist/vue.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
-
+	<script type="text/javascript" src="/js/vue-social-sharing.js"></script>
   <title>{{title}}</title>
 </head>
 <body>
@@ -26,6 +26,20 @@
 	</main>
 
 
+	<script>
+	      Vue.use(SocialSharing);
+	      new Vue({
+	        el: '#sm',
+	        data: {
+	          overriddenNetworks: {
+	            "test": {
+	              "sharer": "https://google.com",
+	              "type": "popup"
+	            },
+	          }
+	        }
+	      });
+	    </script>
 
   <script>
     var appData = {

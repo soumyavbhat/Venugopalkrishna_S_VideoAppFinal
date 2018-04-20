@@ -1,95 +1,15 @@
-/*!
- * vue-social-sharing v2.3.3
- * (c) 2018 nicolasbeauvais
- * Released under the MIT License.
- */
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
-	typeof define === 'function' && define.amd ? define(['vue'], factory) :
-	(global.VueSocialSharing = factory(global.Vue));
-}(this, (function (Vue) { 'use strict';
+import SocialSharingNetwork from './social-sharing-network';
+import BaseNetworks from './networks.json';
+import Vue from 'vue';
 
-Vue = 'default' in Vue ? Vue['default'] : Vue;
-
-var SocialSharingNetwork = {
-  functional: true,
-
-  props: {
-    network: {
-      type: String,
-      default: ''
-    }
-  },
-
-  render: function (createElement, context) {
-    var network = context.parent._data.baseNetworks[context.props.network];
-
-    if (!network) {
-      return console.warn(("Network " + (context.props.network) + " does not exist"));
-    }
-
-    return createElement(context.parent.networkTag, {
-      staticClass: context.data.staticClass || null,
-      staticStyle: context.data.staticStyle || null,
-      class: context.data.class || null,
-      style: context.data.style || null,
-      attrs: {
-        id: context.data.attrs.id || null,
-        'data-link': network.type === 'popup'
-          ? '#share-' + context.props.network
-          : context.parent.createSharingUrl(context.props.network),
-        'data-action': network.type === 'popup' ? null : network.action
-      },
-      on: {
-        click: network.type === 'popup' ? function () {
-          context.parent.share(context.props.network);
-        } : function () {
-          context.parent.touch(context.props.network);
-        }
-      }
-    }, context.children);
-  }
-};
-
-var email = {"sharer":"mailto:?subject=@title&body=@url%0D%0A%0D%0A@description","type":"direct"};
-var facebook = {"sharer":"https://www.facebook.com/sharer/sharer.php?u=@url&title=@title&description=@description&quote=@quote","type":"popup"};
-var googleplus = {"sharer":"https://plus.google.com/share?url=@url","type":"popup"};
-var line = {"sharer":"http://line.me/R/msg/text/?@description%0D%0A@url","type":"popup"};
-var linkedin = {"sharer":"https://www.linkedin.com/shareArticle?mini=true&url=@url&title=@title&summary=@description","type":"popup"};
-var odnoklassniki = {"sharer":"https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=@url&st.comments=@description","type":"popup"};
-var pinterest = {"sharer":"https://pinterest.com/pin/create/button/?url=@url&media=@media&description=@title","type":"popup"};
-var reddit = {"sharer":"https://www.reddit.com/submit?url=@url&title=@title","type":"popup"};
-var skype = {"sharer":"https://web.skype.com/share?url=@description%0D%0A@url","type":"popup"};
-var telegram = {"sharer":"https://t.me/share/url?url=@url&text=@description","type":"popup"};
-var twitter = {"sharer":"https://twitter.com/intent/tweet?text=@title&url=@url&hashtags=@hashtags@twitteruser","type":"popup"};
-var viber = {"sharer":"viber://forward?text=@url @description","type":"direct"};
-var vk = {"sharer":"https://vk.com/share.php?url=@url&title=@title&description=@description&image=@media&noparse=true","type":"popup"};
-var weibo = {"sharer":"http://service.weibo.com/share/share.php?url=@url&title=@title","type":"popup"};
-var whatsapp = {"sharer":"whatsapp://send?text=@description%0D%0A@url","type":"direct","action":"share/whatsapp/share"};
-var sms = {"sharer":"sms:?body=@url%20@description","type":"direct"};
-var BaseNetworks = {
-	email: email,
-	facebook: facebook,
-	googleplus: googleplus,
-	line: line,
-	linkedin: linkedin,
-	odnoklassniki: odnoklassniki,
-	pinterest: pinterest,
-	reddit: reddit,
-	skype: skype,
-	telegram: telegram,
-	twitter: twitter,
-	viber: viber,
-	vk: vk,
-	weibo: weibo,
-	whatsapp: whatsapp,
-	sms: sms
-};
-
-var inBrowser = typeof window !== 'undefined';
+const inBrowser = typeof window !== 'undefined';
 var $window = inBrowser ? window : null;
 
-var SocialSharing = {
+export function mockWindow (self) {
+  $window = self || window; // mock window for unit testing
+}
+
+export default {
   props: {
     /**
      * URL to share.
@@ -194,7 +114,7 @@ var SocialSharing = {
     }
   },
 
-  data: function data () {
+  data () {
     return {
       /**
        * Available sharing networks.
@@ -230,7 +150,7 @@ var SocialSharing = {
      *
      * @param network Social network key.
      */
-    createSharingUrl: function createSharingUrl (network) {
+    createSharingUrl (network) {
       return this.baseNetworks[network].sharer
         .replace(/@url/g, encodeURIComponent(this.url))
         .replace(/@title/g, encodeURIComponent(this.title))
@@ -246,7 +166,7 @@ var SocialSharing = {
      *
      * @param string network Social network key.
      */
-    share: function share (network) {
+    share (network) {
       this.openSharer(network, this.createSharingUrl(network));
 
       this.$root.$emit('social_shares_open', network, this.url);
@@ -258,7 +178,7 @@ var SocialSharing = {
      *
      * @param string network Social network key.
      */
-    touch: function touch (network) {
+    touch (network) {
       window.open(this.createSharingUrl(network), '_self');
 
       this.$root.$emit('social_shares_open', network, this.url);
@@ -270,9 +190,7 @@ var SocialSharing = {
      *
      * @param string url Url to share.
      */
-    openSharer: function openSharer (network, url) {
-      var this$1 = this;
-
+    openSharer (network, url) {
       // If a popup window already exist it will be replaced, trigger a close event.
       if (this.popup.window && this.popup.interval) {
         clearInterval(this.popup.interval);
@@ -304,14 +222,14 @@ var SocialSharing = {
       this.popup.window.focus();
 
       // Create an interval to detect popup closing event
-      this.popup.interval = setInterval(function () {
-        if (this$1.popup.window.closed) {
-          clearInterval(this$1.popup.interval);
+      this.popup.interval = setInterval(() => {
+        if (this.popup.window.closed) {
+          clearInterval(this.popup.interval);
 
-          this$1.popup.window = undefined;
+          this.popup.window = undefined;
 
-          this$1.$root.$emit('social_shares_close', network, this$1.url);
-          this$1.$emit('close', network, this$1.url);
+          this.$root.$emit('social_shares_close', network, this.url);
+          this.$emit('close', network, this.url);
         }
       }, 500);
     }
@@ -320,14 +238,14 @@ var SocialSharing = {
   /**
    * Merge base networks list with user's list
    */
-  beforeMount: function beforeMount () {
+  beforeMount () {
     this.baseNetworks = Vue.util.extend(this.baseNetworks, this.networks);
   },
 
   /**
    * Sets popup default dimensions.
    */
-  mounted: function mounted () {
+  mounted () {
     if (!inBrowser) {
       return;
     }
@@ -336,11 +254,11 @@ var SocialSharing = {
      * Center the popup on dual screens
      * http://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen/32261263
      */
-    var dualScreenLeft = $window.screenLeft !== undefined ? $window.screenLeft : screen.left;
-    var dualScreenTop = $window.screenTop !== undefined ? $window.screenTop : screen.top;
+    const dualScreenLeft = $window.screenLeft !== undefined ? $window.screenLeft : screen.left;
+    const dualScreenTop = $window.screenTop !== undefined ? $window.screenTop : screen.top;
 
-    var width = $window.innerWidth ? $window.innerWidth : (document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width);
-    var height = $window.innerHeight ? $window.innerHeight : (document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height);
+    const width = $window.innerWidth ? $window.innerWidth : (document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width);
+    const height = $window.innerHeight ? $window.innerHeight : (document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height);
 
     this.popup.left = ((width / 2) - (this.popup.width / 2)) + dualScreenLeft;
     this.popup.top = ((height / 2) - (this.popup.height / 2)) + dualScreenTop;
@@ -353,17 +271,3 @@ var SocialSharing = {
     'network': SocialSharingNetwork
   }
 };
-
-SocialSharing.version = '2.3.3';
-
-SocialSharing.install = function (Vue) {
-  Vue.component('social-sharing', SocialSharing);
-};
-
-if (typeof window !== 'undefined') {
-  window.SocialSharing = SocialSharing;
-}
-
-return SocialSharing;
-
-})));

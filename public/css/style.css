@@ -746,4 +746,11 @@ footer ul li {
   overflow-y: scroll;
   height: 50vh; }
 
+#sm li {
+  float: left;
+  padding: 2%; }
+  #sm li span {
+    color: #99d57d;
+    font-size: 3vw; }
+
 /*# sourceMappingURL=style.css.map */
