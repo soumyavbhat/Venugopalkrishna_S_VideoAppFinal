@@ -10,6 +10,7 @@ router.use(bodyParser.urlencoded({extended : false}));
 router.get('/', videocontroller.get_all_movies);
 router.get('/adults', videocontroller.get_all_moviesA);
 router.get('/kids', videocontroller.get_all_moviesK);
+router.get('/kidsadv', videocontroller.get_all_moviesKA);
 
 router.get('/movies/:id/:vidsrc', videocontroller.get_one_movie);
 

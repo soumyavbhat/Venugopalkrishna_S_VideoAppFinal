@@ -1,19 +1,18 @@
 <div class="poster">
 
 <div class="posterpart">
-<div class="postersec">
-  {{#each kidsadv}}
-<a href="/kidsadv/{{img_id}}">
-  <img src="{{img_path}}"></img>
-</a>
-  {{/each}}
-<!-- <a id="1" href="/api"><img class="p1 indexbutton" src="images/index/elvis.png" alt=""></a>
+  <section class="postersec" v-for="genre in genres">
 
-  <img id="2" class="p2 indexbutton" src="images/index/FlashDance.png" alt="">
-  <img id="3" class="p3 indexbutton" src="images/index/Friends.png" alt="">
-  <img id="4" class="p4 indexbutton" src="images/index/gbu.png" alt="">
-  <img id="5" class="p5 indexbutton" src="images/index/tin.png" alt=""> -->
-</div>
+          <div v-for="movie in genre.movies">
+            <a :href="'/movies/' + movie.img_id + '/' + movie.video_path">
+              <img class ="movie-thumb" :src="'/images/' + movie.img_path" >
+              <p class="welcome"></p>
+            </a>
+          </div>
+    </section>
+
+
+
 </div>
 
 

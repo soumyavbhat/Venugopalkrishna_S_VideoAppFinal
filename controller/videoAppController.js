@@ -88,6 +88,35 @@ connect.query(query, (err, rows)=>{
   })
 };
 
+exports.get_all_moviesKA = (req, res)=> {
+  console.log('hit movies');
+
+  connect.getConnection((err, connection)=>{
+    if(err)
+    {
+      return console.log(err.message);
+    }
+let query = "SELECT * FROM movies m, tbl_genre g WHERE g.genre_id = 1 AND img_user = 'KA'";
+
+connect.query(query, (err, rows)=>{
+  connection.release();
+
+  if(err)
+  {
+    console.log(err.message);
+  }
+  console.log(rows);
+
+  res.render('kidsadv', {
+    defaultMovie : rows[Math.floor(Math.random() * rows.length)],
+    data : JSON.stringify(rows),
+    mainpage : true,
+    videopage : false
+  });
+})
+  })
+};
+
 
 exports.get_one_movie = (req, res) =>{
   console.log("one movie");
